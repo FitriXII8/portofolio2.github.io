@@ -1,0 +1,1297 @@
+<!doctype html>
+<html lang="id">
+ <head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Bandung Tourism Hub - Destinasi Wisata Terbaik</title>
+  <meta name="description" content="Jelajahi destinasi wisata terbaik di Bandung - Paris van Java. Temukan tempat wisata, kuliner, dan pengalaman tak terlupakan.">
+  <meta name="keywords" content="wisata bandung, destinasi bandung, tourism, travel, paris van java">
+  <script src="/_sdk/element_sdk.js"></script>
+  <script src="/_sdk/data_sdk.js"></script>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+  <style>
+        body {
+            box-sizing: border-box;
+        }
+        
+        .parallax-bg {
+            background-attachment: fixed;
+            background-position: center;
+            background-repeat: no-repeat;
+            background-size: cover;
+        }
+        
+        .glass-effect {
+            backdrop-filter: blur(10px);
+            background: rgba(255, 255, 255, 0.1);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+        
+        .dark .glass-effect {
+            background: rgba(0, 0, 0, 0.3);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        
+        .animate-float {
+            animation: float 6s ease-in-out infinite;
+        }
+        
+        @keyframes float {
+            0%, 100% { transform: translateY(0px); }
+            50% { transform: translateY(-20px); }
+        }
+        
+        .animate-fade-in {
+            animation: fadeIn 1s ease-in;
+        }
+        
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(30px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        
+        .gradient-text {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+        
+        .chatbot-widget {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            z-index: 1000;
+        }
+        
+        .weather-widget {
+            background: linear-gradient(135deg, #74b9ff, #0984e3);
+        }
+        
+        .counter-animation {
+            transition: all 0.3s ease;
+        }
+        
+        .testimonial-card {
+            min-height: 200px;
+        }
+        
+        .destination-card {
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+        
+        .destination-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 20px 40px rgba(0,0,0,0.1);
+        }
+        
+        .dark .destination-card:hover {
+            box-shadow: 0 20px 40px rgba(255,255,255,0.1);
+        }
+        
+        .map-container {
+            height: 400px;
+            background: linear-gradient(45deg, #f0f2f5, #e1e8ed);
+            border-radius: 12px;
+        }
+        
+        .video-overlay {
+            background: rgba(0,0,0,0.7);
+            backdrop-filter: blur(5px);
+        }
+        
+        .language-switcher {
+            position: relative;
+        }
+        
+        .social-share {
+            transition: transform 0.2s ease;
+        }
+        
+        .social-share:hover {
+            transform: scale(1.1);
+        }
+        
+        .scroll-indicator {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 4px;
+            background: linear-gradient(90deg, #667eea, #764ba2);
+            transform-origin: left;
+            z-index: 9999;
+        }
+    </style>
+  <style>@view-transition { navigation: auto; }</style>
+ </head>
+ <body class="font-sans transition-colors duration-300"><!-- Scroll Progress Indicator -->
+  <div id="scrollProgress" class="scroll-indicator" style="transform: scaleX(0);"></div><!-- Header / Navbar -->
+  <header class="fixed top-0 w-full z-50 glass-effect transition-all duration-300">
+   <nav class="container mx-auto px-6 py-4">
+    <div class="flex items-center justify-between">
+     <div class="flex items-center space-x-2"><i class="fas fa-mountain text-2xl text-blue-600"></i>
+      <h1 id="siteTitle" class="text-xl font-bold gradient-text">Bandung Tourism Hub</h1>
+     </div>
+     <div class="hidden md:flex items-center space-x-8"><a href="#home" class="nav-link hover:text-blue-600 transition-colors">Beranda</a> <a href="#destinations" class="nav-link hover:text-blue-600 transition-colors">Destinasi</a> <a href="#gallery" class="nav-link hover:text-blue-600 transition-colors">Galeri</a> <a href="#events" class="nav-link hover:text-blue-600 transition-colors">Event</a> <a href="#blog" class="nav-link hover:text-blue-600 transition-colors">Blog</a> <a href="#contact" class="nav-link hover:text-blue-600 transition-colors">Kontak</a>
+     </div>
+     <div class="flex items-center space-x-4"><!-- Language Switcher -->
+      <div class="language-switcher"><button id="langToggle" class="flex items-center space-x-1 px-3 py-1 rounded-full bg-blue-100 dark:bg-gray-700 hover:bg-blue-200 dark:hover:bg-gray-600 transition-colors"> <span id="currentLang">ID</span> <i class="fas fa-chevron-down text-xs"></i> </button>
+      </div><!-- Dark Mode Toggle --> <button id="darkModeToggle" class="p-2 rounded-full bg-gray-200 dark:bg-gray-700 hover:bg-gray-300 dark:hover:bg-gray-600 transition-colors"> <i class="fas fa-moon dark:hidden"></i> <i class="fas fa-sun hidden dark:block"></i> </button> <!-- Mobile Menu --> <button id="mobileMenuToggle" class="md:hidden p-2"> <i class="fas fa-bars"></i> </button>
+     </div>
+    </div><!-- Mobile Menu -->
+    <div id="mobileMenu" class="hidden md:hidden mt-4 pb-4">
+     <div class="flex flex-col space-y-2"><a href="#home" class="nav-link py-2 hover:text-blue-600 transition-colors">Beranda</a> <a href="#destinations" class="nav-link py-2 hover:text-blue-600 transition-colors">Destinasi</a> <a href="#gallery" class="nav-link py-2 hover:text-blue-600 transition-colors">Galeri</a> <a href="#events" class="nav-link py-2 hover:text-blue-600 transition-colors">Event</a> <a href="#blog" class="nav-link py-2 hover:text-blue-600 transition-colors">Blog</a> <a href="#contact" class="nav-link py-2 hover:text-blue-600 transition-colors">Kontak</a>
+     </div>
+    </div>
+   </nav>
+  </header><!-- Hero Section -->
+  <section id="home" class="relative min-h-screen flex items-center justify-center parallax-bg" style="background-image: linear-gradient(rgba(0,0,0,0.4), rgba(0,0,0,0.4)), url('data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 1200 800%22><defs><linearGradient id=%22bg%22 x1=%220%22 y1=%220%22 x2=%22100%25%22 y2=%22100%25%22><stop offset=%220%25%22 stop-color=%22%2374b9ff%22/><stop offset=%22100%25%22 stop-color=%22%230984e3%22/></linearGradient></defs><rect width=%221200%22 height=%22800%22 fill=%22url(%23bg)%22/><circle cx=%22200%22 cy=%22200%22 r=%2250%22 fill=%22rgba(255,255,255,0.1)%22/><circle cx=%22800%22 cy=%22150%22 r=%2230%22 fill=%22rgba(255,255,255,0.1)%22/><circle cx=%22600%22 cy=%22400%22 r=%2240%22 fill=%22rgba(255,255,255,0.1)%22/><circle cx=%221000%22 cy=%22600%22 r=%2260%22 fill=%22rgba(255,255,255,0.1)%22/></svg>');">
+   <div class="container mx-auto px-6 text-center text-white">
+    <div class="animate-fade-in">
+     <h2 id="heroTitle" class="text-5xl md:text-7xl font-bold mb-6 animate-float">Discover Beautiful Bandung</h2>
+     <p id="heroSubtitle" class="text-xl md:text-2xl mb-8 opacity-90">Explore amazing destinations in the Paris of Java</p><!-- Search Bar -->
+     <div class="max-w-2xl mx-auto mb-8">
+      <div class="relative"><input type="text" id="searchInput" placeholder="Cari destinasi wisata..." class="w-full px-6 py-4 rounded-full text-gray-800 text-lg focus:outline-none focus:ring-4 focus:ring-blue-300"> <button class="absolute right-2 top-2 bg-blue-600 text-white px-6 py-2 rounded-full hover:bg-blue-700 transition-colors"> <i class="fas fa-search"></i> </button>
+      </div>
+     </div>
+     <div class="flex flex-col sm:flex-row gap-4 justify-center"><button class="bg-blue-600 hover:bg-blue-700 text-white px-8 py-3 rounded-full text-lg font-semibold transition-colors"> Jelajahi Sekarang </button> <button id="virtualTourBtn" class="bg-transparent border-2 border-white text-white hover:bg-white hover:text-gray-800 px-8 py-3 rounded-full text-lg font-semibold transition-colors"> Virtual Tour 360° </button>
+     </div>
+    </div>
+   </div><!-- Weather Widget -->
+   <div class="absolute top-20 right-6 weather-widget text-white p-4 rounded-lg glass-effect">
+    <div class="flex items-center space-x-2"><i class="fas fa-sun text-yellow-300"></i>
+     <div>
+      <div class="font-semibold">
+       Bandung
+      </div>
+      <div class="text-sm opacity-90">
+       26°C - Cerah
+      </div>
+     </div>
+    </div>
+   </div>
+  </section><!-- Statistics Counter -->
+  <section class="py-16 bg-white dark:bg-gray-900 transition-colors">
+   <div class="container mx-auto px-6">
+    <div class="grid grid-cols-2 md:grid-cols-4 gap-8 text-center">
+     <div class="counter-animation">
+      <div class="text-4xl font-bold text-blue-600 mb-2" data-count="150">
+       0
+      </div>
+      <div class="text-gray-600 dark:text-gray-300">
+       Destinasi Wisata
+      </div>
+     </div>
+     <div class="counter-animation">
+      <div class="text-4xl font-bold text-green-600 mb-2" data-count="50000">
+       0
+      </div>
+      <div class="text-gray-600 dark:text-gray-300">
+       Pengunjung/Bulan
+      </div>
+     </div>
+     <div class="counter-animation">
+      <div class="text-4xl font-bold text-purple-600 mb-2" data-count="25">
+       0
+      </div>
+      <div class="text-gray-600 dark:text-gray-300">
+       Event Bulanan
+      </div>
+     </div>
+     <div class="counter-animation">
+      <div class="text-4xl font-bold text-orange-600 mb-2" data-count="4.8">
+       0
+      </div>
+      <div class="text-gray-600 dark:text-gray-300">
+       Rating Pengunjung
+      </div>
+     </div>
+    </div>
+   </div>
+  </section><!-- About Section -->
+  <section class="py-20 bg-gray-50 dark:bg-gray-800 transition-colors">
+   <div class="container mx-auto px-6">
+    <div class="text-center mb-16">
+     <h3 id="aboutTitle" class="text-4xl font-bold mb-6 gradient-text">About Bandung</h3>
+     <p class="text-xl text-gray-600 dark:text-gray-300 max-w-3xl mx-auto">Bandung, dikenal sebagai "Paris van Java", adalah destinasi wisata yang memukau dengan keindahan alam, kuliner lezat, dan budaya yang kaya. Jelajahi pesona kota kembang ini bersama kami.</p>
+    </div>
+   </div>
+  </section><!-- Destinations Section -->
+  <section id="destinations" class="py-20 bg-white dark:bg-gray-900 transition-colors">
+   <div class="container mx-auto px-6">
+    <div class="text-center mb-16">
+     <h3 class="text-4xl font-bold mb-6 gradient-text">Destinasi Populer</h3><!-- Filter Categories -->
+     <div class="flex flex-wrap justify-center gap-4 mb-12"><button class="filter-btn active bg-blue-600 text-white px-6 py-2 rounded-full" data-filter="all">Semua</button> <button class="filter-btn bg-gray-200 dark:bg-gray-700 text-gray-700 dark:text-gray-300 px-6 py-2 rounded-full hover:bg-blue-600 hover:text-white transition-colors" data-filter="alam">Alam</button> <button class="filter-btn bg-gray-200 dark:bg-gray-700 text-gray-700 dark:text-gray-300 px-6 py-2 rounded-full hover:bg-blue-600 hover:text-white transition-colors" data-filter="kuliner">Kuliner</button> <button class="filter-btn bg-gray-200 dark:bg-gray-700 text-gray-700 dark:text-gray-300 px-6 py-2 rounded-full hover:bg-blue-600 hover:text-white transition-colors" data-filter="budaya">Budaya</button> <button class="filter-btn bg-gray-200 dark:bg-gray-700 text-gray-700 dark:text-gray-300 px-6 py-2 rounded-full hover:bg-blue-600 hover:text-white transition-colors" data-filter="belanja">Belanja</button>
+     </div>
+    </div>
+    <div id="destinationGrid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8"><!-- Destination cards will be populated by JavaScript -->
+    </div>
+   </div>
+  </section><!-- Gallery Section -->
+  <section id="gallery" class="py-20 bg-gray-50 dark:bg-gray-800 transition-colors">
+   <div class="container mx-auto px-6">
+    <div class="text-center mb-16">
+     <h3 class="text-4xl font-bold mb-6 gradient-text">Galeri Foto &amp; Video</h3>
+     <p class="text-xl text-gray-600 dark:text-gray-300">Saksikan keindahan Bandung melalui koleksi foto dan video kami</p>
+    </div>
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+     <div class="relative group cursor-pointer overflow-hidden rounded-lg">
+      <div class="aspect-video bg-gradient-to-br from-blue-400 to-purple-500 flex items-center justify-center"><i class="fas fa-play text-white text-4xl group-hover:scale-110 transition-transform"></i>
+      </div>
+      <div class="absolute inset-0 bg-black bg-opacity-0 group-hover:bg-opacity-30 transition-all flex items-center justify-center"><span class="text-white opacity-0 group-hover:opacity-100 transition-opacity">Video Tour Tangkuban Perahu</span>
+      </div>
+     </div>
+     <div class="relative group cursor-pointer overflow-hidden rounded-lg">
+      <div class="aspect-video bg-gradient-to-br from-green-400 to-blue-500 flex items-center justify-center"><i class="fas fa-camera text-white text-4xl"></i>
+      </div>
+      <div class="absolute inset-0 bg-black bg-opacity-0 group-hover:bg-opacity-30 transition-all flex items-center justify-center"><span class="text-white opacity-0 group-hover:opacity-100 transition-opacity">Kawah Putih</span>
+      </div>
+     </div>
+     <div class="relative group cursor-pointer overflow-hidden rounded-lg">
+      <div class="aspect-video bg-gradient-to-br from-purple-400 to-pink-500 flex items-center justify-center"><i class="fas fa-vr-cardboard text-white text-4xl"></i>
+      </div>
+      <div class="absolute inset-0 bg-black bg-opacity-0 group-hover:bg-opacity-30 transition-all flex items-center justify-center"><span class="text-white opacity-0 group-hover:opacity-100 transition-opacity">Virtual Tour 360°</span>
+      </div>
+     </div>
+    </div>
+   </div>
+  </section><!-- Events Section -->
+  <section id="events" class="py-20 bg-white dark:bg-gray-900 transition-colors">
+   <div class="container mx-auto px-6">
+    <div class="text-center mb-16">
+     <h3 class="text-4xl font-bold mb-6 gradient-text">Event &amp; Kegiatan</h3>
+     <p class="text-xl text-gray-600 dark:text-gray-300">Jangan lewatkan event menarik di Bandung</p>
+    </div>
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+     <div class="bg-white dark:bg-gray-800 rounded-lg shadow-lg overflow-hidden destination-card">
+      <div class="h-48 bg-gradient-to-br from-red-400 to-orange-500 flex items-center justify-center"><i class="fas fa-calendar-alt text-white text-4xl"></i>
+      </div>
+      <div class="p-6">
+       <h4 class="text-xl font-bold mb-2">Festival Kuliner Bandung</h4>
+       <p class="text-gray-600 dark:text-gray-300 mb-4">15-17 Desember 2024</p>
+       <p class="text-gray-600 dark:text-gray-300">Nikmati berbagai kuliner khas Bandung dalam satu tempat</p>
+      </div>
+     </div>
+     <div class="bg-white dark:bg-gray-800 rounded-lg shadow-lg overflow-hidden destination-card">
+      <div class="h-48 bg-gradient-to-br from-green-400 to-teal-500 flex items-center justify-center"><i class="fas fa-music text-white text-4xl"></i>
+      </div>
+      <div class="p-6">
+       <h4 class="text-xl font-bold mb-2">Bandung Music Festival</h4>
+       <p class="text-gray-600 dark:text-gray-300 mb-4">20-22 Desember 2024</p>
+       <p class="text-gray-600 dark:text-gray-300">Konser musik dari artis lokal dan internasional</p>
+      </div>
+     </div>
+     <div class="bg-white dark:bg-gray-800 rounded-lg shadow-lg overflow-hidden destination-card">
+      <div class="h-48 bg-gradient-to-br from-purple-400 to-indigo-500 flex items-center justify-center"><i class="fas fa-palette text-white text-4xl"></i>
+      </div>
+      <div class="p-6">
+       <h4 class="text-xl font-bold mb-2">Pameran Seni Budaya</h4>
+       <p class="text-gray-600 dark:text-gray-300 mb-4">25-30 Desember 2024</p>
+       <p class="text-gray-600 dark:text-gray-300">Pameran karya seni dan budaya lokal Bandung</p>
+      </div>
+     </div>
+    </div>
+   </div>
+  </section><!-- Testimonials Section -->
+  <section class="py-20 bg-gray-50 dark:bg-gray-800 transition-colors">
+   <div class="container mx-auto px-6">
+    <div class="text-center mb-16">
+     <h3 class="text-4xl font-bold mb-6 gradient-text">Testimoni Pengunjung</h3>
+     <p class="text-xl text-gray-600 dark:text-gray-300">Apa kata mereka tentang pengalaman wisata di Bandung</p>
+    </div>
+    <div id="testimonialCarousel" class="relative max-w-4xl mx-auto">
+     <div class="testimonial-container overflow-hidden">
+      <div id="testimonialSlides" class="flex transition-transform duration-500"><!-- Testimonial slides will be populated by JavaScript -->
+      </div>
+     </div><button id="prevTestimonial" class="absolute left-4 top-1/2 transform -translate-y-1/2 bg-white dark:bg-gray-700 p-3 rounded-full shadow-lg hover:shadow-xl transition-shadow"> <i class="fas fa-chevron-left text-gray-600 dark:text-gray-300"></i> </button> <button id="nextTestimonial" class="absolute right-4 top-1/2 transform -translate-y-1/2 bg-white dark:bg-gray-700 p-3 rounded-full shadow-lg hover:shadow-xl transition-shadow"> <i class="fas fa-chevron-right text-gray-600 dark:text-gray-300"></i> </button>
+    </div>
+   </div>
+  </section><!-- Blog Section -->
+  <section id="blog" class="py-20 bg-white dark:bg-gray-900 transition-colors">
+   <div class="container mx-auto px-6">
+    <div class="text-center mb-16">
+     <h3 class="text-4xl font-bold mb-6 gradient-text">Blog Wisata</h3>
+     <p class="text-xl text-gray-600 dark:text-gray-300">Tips dan panduan wisata terbaru</p>
+    </div>
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+     <article class="bg-white dark:bg-gray-800 rounded-lg shadow-lg overflow-hidden destination-card">
+      <div class="h-48 bg-gradient-to-br from-blue-400 to-cyan-500 flex items-center justify-center"><i class="fas fa-newspaper text-white text-4xl"></i>
+      </div>
+      <div class="p-6">
+       <h4 class="text-xl font-bold mb-2">10 Tempat Wisata Wajib di Bandung</h4>
+       <p class="text-gray-600 dark:text-gray-300 mb-4">Panduan lengkap destinasi yang tidak boleh dilewatkan saat berkunjung ke Bandung</p>
+       <div class="flex items-center justify-between"><span class="text-sm text-gray-500">5 Desember 2024</span> <a href="#" class="text-blue-600 hover:text-blue-700 font-semibold">Baca Selengkapnya</a>
+       </div>
+      </div>
+     </article>
+     <article class="bg-white dark:bg-gray-800 rounded-lg shadow-lg overflow-hidden destination-card">
+      <div class="h-48 bg-gradient-to-br from-green-400 to-emerald-500 flex items-center justify-center"><i class="fas fa-utensils text-white text-4xl"></i>
+      </div>
+      <div class="p-6">
+       <h4 class="text-xl font-bold mb-2">Kuliner Khas Bandung yang Wajib Dicoba</h4>
+       <p class="text-gray-600 dark:text-gray-300 mb-4">Jelajahi cita rasa autentik Bandung melalui kuliner tradisional yang menggugah selera</p>
+       <div class="flex items-center justify-between"><span class="text-sm text-gray-500">3 Desember 2024</span> <a href="#" class="text-blue-600 hover:text-blue-700 font-semibold">Baca Selengkapnya</a>
+       </div>
+      </div>
+     </article>
+     <article class="bg-white dark:bg-gray-800 rounded-lg shadow-lg overflow-hidden destination-card">
+      <div class="h-48 bg-gradient-to-br from-purple-400 to-violet-500 flex items-center justify-center"><i class="fas fa-camera text-white text-4xl"></i>
+      </div>
+      <div class="p-6">
+       <h4 class="text-xl font-bold mb-2">Tips Fotografi di Destinasi Wisata</h4>
+       <p class="text-gray-600 dark:text-gray-300 mb-4">Cara mengabadikan momen terbaik selama berwisata dengan teknik fotografi yang tepat</p>
+       <div class="flex items-center justify-between"><span class="text-sm text-gray-500">1 Desember 2024</span> <a href="#" class="text-blue-600 hover:text-blue-700 font-semibold">Baca Selengkapnya</a>
+       </div>
+      </div>
+     </article>
+    </div>
+   </div>
+  </section><!-- Map Integration -->
+  <section class="py-20 bg-gray-50 dark:bg-gray-800 transition-colors">
+   <div class="container mx-auto px-6">
+    <div class="text-center mb-16">
+     <h3 class="text-4xl font-bold mb-6 gradient-text">Peta Lokasi</h3>
+     <p class="text-xl text-gray-600 dark:text-gray-300">Temukan lokasi destinasi wisata di Bandung</p>
+    </div>
+    <div class="map-container flex items-center justify-center">
+     <div class="text-center"><i class="fas fa-map-marked-alt text-6xl text-blue-600 mb-4"></i>
+      <h4 class="text-2xl font-bold text-gray-700 dark:text-gray-300 mb-2">Peta Interaktif</h4>
+      <p class="text-gray-600 dark:text-gray-400">Klik untuk melihat lokasi destinasi wisata</p>
+     </div>
+    </div>
+   </div>
+  </section><!-- Contact Section -->
+  <section id="contact" class="py-20 bg-white dark:bg-gray-900 transition-colors">
+   <div class="container mx-auto px-6">
+    <div class="text-center mb-16">
+     <h3 id="contactTitle" class="text-4xl font-bold mb-6 gradient-text">Contact Us</h3>
+     <p class="text-xl text-gray-600 dark:text-gray-300">Hubungi kami untuk informasi lebih lanjut</p>
+    </div>
+    <div class="grid grid-cols-1 lg:grid-cols-2 gap-12"><!-- Contact Form -->
+     <div class="bg-gray-50 dark:bg-gray-800 p-8 rounded-lg">
+      <h4 class="text-2xl font-bold mb-6">Kirim Pesan</h4>
+      <form id="contactForm" class="space-y-6">
+       <div><label for="contactName" class="block text-sm font-medium mb-2">Nama Lengkap</label> <input type="text" id="contactName" required class="w-full px-4 py-3 border border-gray-300 dark:border-gray-600 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 dark:bg-gray-700 dark:text-white">
+       </div>
+       <div><label for="contactEmail" class="block text-sm font-medium mb-2">Email</label> <input type="email" id="contactEmail" required class="w-full px-4 py-3 border border-gray-300 dark:border-gray-600 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 dark:bg-gray-700 dark:text-white">
+       </div>
+       <div><label for="contactDestination" class="block text-sm font-medium mb-2">Destinasi yang Diminati</label> <select id="contactDestination" class="w-full px-4 py-3 border border-gray-300 dark:border-gray-600 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 dark:bg-gray-700 dark:text-white"> <option value="">Pilih Destinasi</option> <option value="tangkuban-perahu">Tangkuban Perahu</option> <option value="kawah-putih">Kawah Putih</option> <option value="dago">Dago</option> <option value="lembang">Lembang</option> <option value="braga">Braga Street</option> </select>
+       </div>
+       <div><label for="contactMessage" class="block text-sm font-medium mb-2">Pesan</label> <textarea id="contactMessage" rows="4" required class="w-full px-4 py-3 border border-gray-300 dark:border-gray-600 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 dark:bg-gray-700 dark:text-white"></textarea>
+       </div><button type="submit" class="w-full bg-blue-600 hover:bg-blue-700 text-white py-3 rounded-lg font-semibold transition-colors"> Kirim Pesan </button>
+      </form>
+     </div><!-- Rating & Feedback Form -->
+     <div class="bg-gray-50 dark:bg-gray-800 p-8 rounded-lg">
+      <h4 class="text-2xl font-bold mb-6">Berikan Penilaian</h4>
+      <form id="ratingForm" class="space-y-6">
+       <div><label for="ratingName" class="block text-sm font-medium mb-2">Nama</label> <input type="text" id="ratingName" required class="w-full px-4 py-3 border border-gray-300 dark:border-gray-600 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 dark:bg-gray-700 dark:text-white">
+       </div>
+       <div><label class="block text-sm font-medium mb-2">Rating</label>
+        <div id="starRating" class="flex space-x-1 mb-2"><i class="fas fa-star text-2xl text-gray-300 cursor-pointer hover:text-yellow-400 transition-colors" data-rating="1"></i> <i class="fas fa-star text-2xl text-gray-300 cursor-pointer hover:text-yellow-400 transition-colors" data-rating="2"></i> <i class="fas fa-star text-2xl text-gray-300 cursor-pointer hover:text-yellow-400 transition-colors" data-rating="3"></i> <i class="fas fa-star text-2xl text-gray-300 cursor-pointer hover:text-yellow-400 transition-colors" data-rating="4"></i> <i class="fas fa-star text-2xl text-gray-300 cursor-pointer hover:text-yellow-400 transition-colors" data-rating="5"></i>
+        </div><input type="hidden" id="selectedRating" value="0">
+       </div>
+       <div><label for="ratingMessage" class="block text-sm font-medium mb-2">Testimoni</label> <textarea id="ratingMessage" rows="4" required class="w-full px-4 py-3 border border-gray-300 dark:border-gray-600 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 dark:bg-gray-700 dark:text-white" placeholder="Ceritakan pengalaman Anda..."></textarea>
+       </div><button type="submit" class="w-full bg-green-600 hover:bg-green-700 text-white py-3 rounded-lg font-semibold transition-colors"> Kirim Testimoni </button>
+      </form>
+     </div>
+    </div><!-- Social Share -->
+    <div class="text-center mt-16">
+     <h4 class="text-2xl font-bold mb-6">Bagikan Website Ini</h4>
+     <div class="flex justify-center space-x-4"><button class="social-share bg-blue-600 text-white p-3 rounded-full hover:bg-blue-700 transition-colors"> <i class="fab fa-facebook-f"></i> </button> <button class="social-share bg-blue-400 text-white p-3 rounded-full hover:bg-blue-500 transition-colors"> <i class="fab fa-twitter"></i> </button> <button class="social-share bg-pink-600 text-white p-3 rounded-full hover:bg-pink-700 transition-colors"> <i class="fab fa-instagram"></i> </button> <button class="social-share bg-green-600 text-white p-3 rounded-full hover:bg-green-700 transition-colors"> <i class="fab fa-whatsapp"></i> </button>
+     </div>
+    </div>
+   </div>
+  </section><!-- Footer -->
+  <footer class="bg-gray-900 text-white py-16">
+   <div class="container mx-auto px-6">
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+     <div>
+      <div class="flex items-center space-x-2 mb-4"><i class="fas fa-mountain text-2xl text-blue-400"></i>
+       <h4 class="text-xl font-bold">Bandung Tourism Hub</h4>
+      </div>
+      <p class="text-gray-400 mb-4">Jelajahi keindahan Bandung bersama kami. Temukan destinasi terbaik dan pengalaman tak terlupakan.</p>
+      <div class="flex space-x-4"><a href="#" class="text-gray-400 hover:text-white transition-colors"> <i class="fab fa-facebook-f"></i> </a> <a href="#" class="text-gray-400 hover:text-white transition-colors"> <i class="fab fa-instagram"></i> </a> <a href="#" class="text-gray-400 hover:text-white transition-colors"> <i class="fab fa-twitter"></i> </a> <a href="#" class="text-gray-400 hover:text-white transition-colors"> <i class="fab fa-youtube"></i> </a>
+      </div>
+     </div>
+     <div>
+      <h5 class="text-lg font-semibold mb-4">Destinasi Populer</h5>
+      <ul class="space-y-2 text-gray-400">
+       <li><a href="#" class="hover:text-white transition-colors">Tangkuban Perahu</a></li>
+       <li><a href="#" class="hover:text-white transition-colors">Kawah Putih</a></li>
+       <li><a href="#" class="hover:text-white transition-colors">Dago</a></li>
+       <li><a href="#" class="hover:text-white transition-colors">Lembang</a></li>
+       <li><a href="#" class="hover:text-white transition-colors">Braga Street</a></li>
+      </ul>
+     </div>
+     <div>
+      <h5 class="text-lg font-semibold mb-4">Layanan</h5>
+      <ul class="space-y-2 text-gray-400">
+       <li><a href="#" class="hover:text-white transition-colors">Panduan Wisata</a></li>
+       <li><a href="#" class="hover:text-white transition-colors">Reservasi Hotel</a></li>
+       <li><a href="#" class="hover:text-white transition-colors">Paket Wisata</a></li>
+       <li><a href="#" class="hover:text-white transition-colors">Transport</a></li>
+       <li><a href="#" class="hover:text-white transition-colors">Event Organizer</a></li>
+      </ul>
+     </div>
+     <div>
+      <h5 class="text-lg font-semibold mb-4">Kontak</h5>
+      <div class="space-y-2 text-gray-400">
+       <div class="flex items-center space-x-2"><i class="fas fa-map-marker-alt"></i> <span>Jl. Asia Afrika No. 8, Bandung</span>
+       </div>
+       <div class="flex items-center space-x-2"><i class="fas fa-phone"></i> <span>+62 22 1234 5678</span>
+       </div>
+       <div class="flex items-center space-x-2"><i class="fas fa-envelope"></i> <span>info@bandungtourism.com</span>
+       </div>
+      </div>
+     </div>
+    </div>
+    <div class="border-t border-gray-800 mt-12 pt-8 text-center text-gray-400">
+     <p>© 2024 Bandung Tourism Hub. All rights reserved.</p>
+    </div>
+   </div>
+  </footer><!-- Chatbot Widget -->
+  <div class="chatbot-widget"><button id="chatbotToggle" class="bg-blue-600 hover:bg-blue-700 text-white p-4 rounded-full shadow-lg transition-colors"> <i class="fas fa-comments text-xl"></i> </button>
+   <div id="chatbotPanel" class="hidden absolute bottom-16 right-0 w-80 bg-white dark:bg-gray-800 rounded-lg shadow-xl border border-gray-200 dark:border-gray-700">
+    <div class="bg-blue-600 text-white p-4 rounded-t-lg">
+     <div class="flex items-center justify-between">
+      <h4 class="font-semibold">Panduan Wisata</h4><button id="closeChatbot" class="text-white hover:text-gray-200"> <i class="fas fa-times"></i> </button>
+     </div>
+    </div>
+    <div class="p-4 h-64 overflow-y-auto" id="chatMessages">
+     <div class="bg-gray-100 dark:bg-gray-700 p-3 rounded-lg mb-3">
+      <p class="text-sm">Halo! Saya asisten virtual Anda. Ada yang bisa saya bantu tentang wisata Bandung?</p>
+     </div>
+    </div>
+    <div class="p-4 border-t border-gray-200 dark:border-gray-700">
+     <div class="flex space-x-2"><input type="text" id="chatInput" placeholder="Ketik pesan..." class="flex-1 px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-blue-500 dark:bg-gray-700 dark:text-white"> <button id="sendChat" class="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-lg text-sm transition-colors"> <i class="fas fa-paper-plane"></i> </button>
+     </div>
+    </div>
+   </div>
+  </div><!-- Video Popup Modal -->
+  <div id="videoModal" class="hidden fixed inset-0 z-50 video-overlay flex items-center justify-center">
+   <div class="relative max-w-4xl w-full mx-4"><button id="closeVideo" class="absolute -top-10 right-0 text-white text-2xl hover:text-gray-300"> <i class="fas fa-times"></i> </button>
+    <div class="aspect-video bg-black rounded-lg flex items-center justify-center">
+     <div class="text-center text-white"><i class="fas fa-play text-6xl mb-4"></i>
+      <p class="text-xl">Virtual Tour 360° Bandung</p>
+     </div>
+    </div>
+   </div>
+  </div>
+  <script>
+        // Configuration and Data Management
+        const defaultConfig = {
+            site_title: "Bandung Tourism Hub",
+            hero_title: "Discover Beautiful Bandung",
+            hero_subtitle: "Explore amazing destinations in the Paris of Java",
+            about_title: "About Bandung",
+            contact_title: "Contact Us",
+            background_color: "#ffffff",
+            surface_color: "#f8fafc",
+            text_color: "#1f2937",
+            primary_action_color: "#2563eb",
+            secondary_action_color: "#6b7280",
+            font_family: "Inter",
+            font_size: 16
+        };
+
+        let config = { ...defaultConfig };
+        let currentLanguage = 'id';
+        let isDarkMode = false;
+        let currentTestimonialIndex = 0;
+        let selectedRating = 0;
+        let allDestinations = [];
+        let currentRecordCount = 0;
+
+        // Destinations Data
+        const destinations = [
+            {
+                id: 1,
+                name: "Tangkuban Perahu",
+                category: "alam",
+                description: "Gunung berapi aktif dengan kawah yang menakjubkan",
+                rating: 4.5,
+                price: "Rp 30.000",
+                image: "tangkuban-perahu"
+            },
+            {
+                id: 2,
+                name: "Kawah Putih",
+                category: "alam",
+                description: "Danau kawah dengan air berwarna putih kehijauan",
+                rating: 4.7,
+                price: "Rp 25.000",
+                image: "kawah-putih"
+            },
+            {
+                id: 3,
+                name: "Braga Street",
+                category: "budaya",
+                description: "Jalan bersejarah dengan arsitektur kolonial",
+                rating: 4.3,
+                price: "Gratis",
+                image: "braga-street"
+            },
+            {
+                id: 4,
+                name: "Dago Dreampark",
+                category: "alam",
+                description: "Taman rekreasi dengan pemandangan kota Bandung",
+                rating: 4.4,
+                price: "Rp 15.000",
+                image: "dago-dreampark"
+            },
+            {
+                id: 5,
+                name: "Cihampelas Walk",
+                category: "belanja",
+                description: "Pusat perbelanjaan dengan berbagai brand lokal",
+                rating: 4.2,
+                price: "Gratis",
+                image: "cihampelas-walk"
+            },
+            {
+                id: 6,
+                name: "Rumah Mode Factory Outlet",
+                category: "belanja",
+                description: "Factory outlet dengan produk fashion berkualitas",
+                rating: 4.1,
+                price: "Gratis",
+                image: "rumah-mode"
+            }
+        ];
+
+        // Testimonials Data
+        const testimonials = [
+            {
+                name: "Sarah Johnson",
+                rating: 5,
+                message: "Pengalaman wisata yang luar biasa! Bandung memiliki keindahan alam yang memukau dan kuliner yang menggugah selera.",
+                location: "Jakarta"
+            },
+            {
+                name: "Ahmad Rizki",
+                rating: 5,
+                message: "Destinasi wisata yang sempurna untuk liburan keluarga. Anak-anak sangat menikmati setiap momen di Bandung.",
+                location: "Surabaya"
+            },
+            {
+                name: "Maria Santos",
+                rating: 4,
+                message: "Beautiful city with amazing nature views. The weather is perfect and people are very friendly!",
+                location: "Philippines"
+            }
+        ];
+
+        // Language translations
+        const translations = {
+            id: {
+                home: "Beranda",
+                destinations: "Destinasi",
+                gallery: "Galeri",
+                events: "Event",
+                blog: "Blog",
+                contact: "Kontak",
+                search_placeholder: "Cari destinasi wisata...",
+                explore_now: "Jelajahi Sekarang",
+                virtual_tour: "Virtual Tour 360°",
+                all: "Semua",
+                nature: "Alam",
+                culinary: "Kuliner",
+                culture: "Budaya",
+                shopping: "Belanja"
+            },
+            en: {
+                home: "Home",
+                destinations: "Destinations",
+                gallery: "Gallery",
+                events: "Events",
+                blog: "Blog",
+                contact: "Contact",
+                search_placeholder: "Search destinations...",
+                explore_now: "Explore Now",
+                virtual_tour: "Virtual Tour 360°",
+                all: "All",
+                nature: "Nature",
+                culinary: "Culinary",
+                culture: "Culture",
+                shopping: "Shopping"
+            }
+        };
+
+        // Data SDK Handler
+        const dataHandler = {
+            onDataChanged(data) {
+                currentRecordCount = data.length;
+                
+                // Update testimonials with user submissions
+                const userTestimonials = data.filter(item => item.type === 'testimonial');
+                if (userTestimonials.length > 0) {
+                    updateTestimonialCarousel([...testimonials, ...userTestimonials]);
+                }
+                
+                // Update contact messages count if needed
+                const contactMessages = data.filter(item => item.type === 'contact');
+                console.log(`Total contact messages: ${contactMessages.length}`);
+            }
+        };
+
+        // Element SDK Implementation
+        const elementApi = {
+            defaultConfig,
+            onConfigChange: async (newConfig) => {
+                config = { ...config, ...newConfig };
+                
+                // Update text content
+                const siteTitle = document.getElementById('siteTitle');
+                if (siteTitle) siteTitle.textContent = config.site_title || defaultConfig.site_title;
+                
+                const heroTitle = document.getElementById('heroTitle');
+                if (heroTitle) heroTitle.textContent = config.hero_title || defaultConfig.hero_title;
+                
+                const heroSubtitle = document.getElementById('heroSubtitle');
+                if (heroSubtitle) heroSubtitle.textContent = config.hero_subtitle || defaultConfig.hero_subtitle;
+                
+                const aboutTitle = document.getElementById('aboutTitle');
+                if (aboutTitle) aboutTitle.textContent = config.about_title || defaultConfig.about_title;
+                
+                const contactTitle = document.getElementById('contactTitle');
+                if (contactTitle) contactTitle.textContent = config.contact_title || defaultConfig.contact_title;
+                
+                // Update colors
+                const backgroundColor = config.background_color || defaultConfig.background_color;
+                const surfaceColor = config.surface_color || defaultConfig.surface_color;
+                const textColor = config.text_color || defaultConfig.text_color;
+                const primaryActionColor = config.primary_action_color || defaultConfig.primary_action_color;
+                const secondaryActionColor = config.secondary_action_color || defaultConfig.secondary_action_color;
+                
+                document.documentElement.style.setProperty('--bg-color', backgroundColor);
+                document.documentElement.style.setProperty('--surface-color', surfaceColor);
+                document.documentElement.style.setProperty('--text-color', textColor);
+                document.documentElement.style.setProperty('--primary-color', primaryActionColor);
+                document.documentElement.style.setProperty('--secondary-color', secondaryActionColor);
+                
+                // Update font
+                const customFont = config.font_family || defaultConfig.font_family;
+                const baseFontStack = 'system-ui, -apple-system, sans-serif';
+                document.body.style.fontFamily = `${customFont}, ${baseFontStack}`;
+                
+                // Update font size
+                const baseSize = config.font_size || defaultConfig.font_size;
+                document.documentElement.style.fontSize = `${baseSize}px`;
+            },
+            mapToCapabilities: (config) => ({
+                recolorables: [
+                    {
+                        get: () => config.background_color || defaultConfig.background_color,
+                        set: (value) => {
+                            config.background_color = value;
+                            window.elementSdk.setConfig({ background_color: value });
+                        }
+                    },
+                    {
+                        get: () => config.surface_color || defaultConfig.surface_color,
+                        set: (value) => {
+                            config.surface_color = value;
+                            window.elementSdk.setConfig({ surface_color: value });
+                        }
+                    },
+                    {
+                        get: () => config.text_color || defaultConfig.text_color,
+                        set: (value) => {
+                            config.text_color = value;
+                            window.elementSdk.setConfig({ text_color: value });
+                        }
+                    },
+                    {
+                        get: () => config.primary_action_color || defaultConfig.primary_action_color,
+                        set: (value) => {
+                            config.primary_action_color = value;
+                            window.elementSdk.setConfig({ primary_action_color: value });
+                        }
+                    },
+                    {
+                        get: () => config.secondary_action_color || defaultConfig.secondary_action_color,
+                        set: (value) => {
+                            config.secondary_action_color = value;
+                            window.elementSdk.setConfig({ secondary_action_color: value });
+                        }
+                    }
+                ],
+                borderables: [],
+                fontEditable: {
+                    get: () => config.font_family || defaultConfig.font_family,
+                    set: (value) => {
+                        config.font_family = value;
+                        window.elementSdk.setConfig({ font_family: value });
+                    }
+                },
+                fontSizeable: {
+                    get: () => config.font_size || defaultConfig.font_size,
+                    set: (value) => {
+                        config.font_size = value;
+                        window.elementSdk.setConfig({ font_size: value });
+                    }
+                }
+            }),
+            mapToEditPanelValues: (config) => new Map([
+                ["site_title", config.site_title || defaultConfig.site_title],
+                ["hero_title", config.hero_title || defaultConfig.hero_title],
+                ["hero_subtitle", config.hero_subtitle || defaultConfig.hero_subtitle],
+                ["about_title", config.about_title || defaultConfig.about_title],
+                ["contact_title", config.contact_title || defaultConfig.contact_title]
+            ])
+        };
+
+        // Initialize SDKs
+        async function initializeSDKs() {
+            try {
+                if (window.dataSdk) {
+                    const initResult = await window.dataSdk.init(dataHandler);
+                    if (!initResult.isOk) {
+                        console.error("Failed to initialize data SDK");
+                    }
+                }
+                
+                if (window.elementSdk) {
+                    await window.elementSdk.init(elementApi);
+                }
+            } catch (error) {
+                console.error("SDK initialization error:", error);
+            }
+        }
+
+        // Initialize when page loads
+        document.addEventListener('DOMContentLoaded', function() {
+            initializeSDKs();
+            initializeApp();
+        });
+
+        function initializeApp() {
+            setupEventListeners();
+            renderDestinations();
+            updateTestimonialCarousel(testimonials);
+            animateCounters();
+            setupScrollProgress();
+            setupParallaxEffect();
+        }
+
+        function setupEventListeners() {
+            // Dark mode toggle
+            const darkModeToggle = document.getElementById('darkModeToggle');
+            if (darkModeToggle) {
+                darkModeToggle.addEventListener('click', toggleDarkMode);
+            }
+
+            // Language toggle
+            const langToggle = document.getElementById('langToggle');
+            if (langToggle) {
+                langToggle.addEventListener('click', toggleLanguage);
+            }
+
+            // Mobile menu toggle
+            const mobileMenuToggle = document.getElementById('mobileMenuToggle');
+            const mobileMenu = document.getElementById('mobileMenu');
+            if (mobileMenuToggle && mobileMenu) {
+                mobileMenuToggle.addEventListener('click', () => {
+                    mobileMenu.classList.toggle('hidden');
+                });
+            }
+
+            // Smooth scrolling for navigation links
+            document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+                anchor.addEventListener('click', function (e) {
+                    e.preventDefault();
+                    const target = document.querySelector(this.getAttribute('href'));
+                    if (target) {
+                        target.scrollIntoView({
+                            behavior: 'smooth',
+                            block: 'start'
+                        });
+                    }
+                });
+            });
+
+            // Filter buttons
+            document.querySelectorAll('.filter-btn').forEach(btn => {
+                btn.addEventListener('click', function() {
+                    document.querySelectorAll('.filter-btn').forEach(b => {
+                        b.classList.remove('active', 'bg-blue-600', 'text-white');
+                        b.classList.add('bg-gray-200', 'dark:bg-gray-700', 'text-gray-700', 'dark:text-gray-300');
+                    });
+                    this.classList.add('active', 'bg-blue-600', 'text-white');
+                    this.classList.remove('bg-gray-200', 'dark:bg-gray-700', 'text-gray-700', 'dark:text-gray-300');
+                    
+                    const filter = this.getAttribute('data-filter');
+                    filterDestinations(filter);
+                });
+            });
+
+            // Star rating
+            document.querySelectorAll('#starRating i').forEach(star => {
+                star.addEventListener('click', function() {
+                    selectedRating = parseInt(this.getAttribute('data-rating'));
+                    document.getElementById('selectedRating').value = selectedRating;
+                    updateStarRating(selectedRating);
+                });
+            });
+
+            // Testimonial carousel
+            const prevBtn = document.getElementById('prevTestimonial');
+            const nextBtn = document.getElementById('nextTestimonial');
+            if (prevBtn && nextBtn) {
+                prevBtn.addEventListener('click', () => changeTestimonial(-1));
+                nextBtn.addEventListener('click', () => changeTestimonial(1));
+            }
+
+            // Forms
+            const contactForm = document.getElementById('contactForm');
+            if (contactForm) {
+                contactForm.addEventListener('submit', handleContactSubmit);
+            }
+
+            const ratingForm = document.getElementById('ratingForm');
+            if (ratingForm) {
+                ratingForm.addEventListener('submit', handleRatingSubmit);
+            }
+
+            // Chatbot
+            const chatbotToggle = document.getElementById('chatbotToggle');
+            const chatbotPanel = document.getElementById('chatbotPanel');
+            const closeChatbot = document.getElementById('closeChatbot');
+            const sendChat = document.getElementById('sendChat');
+            const chatInput = document.getElementById('chatInput');
+
+            if (chatbotToggle && chatbotPanel) {
+                chatbotToggle.addEventListener('click', () => {
+                    chatbotPanel.classList.toggle('hidden');
+                });
+            }
+
+            if (closeChatbot && chatbotPanel) {
+                closeChatbot.addEventListener('click', () => {
+                    chatbotPanel.classList.add('hidden');
+                });
+            }
+
+            if (sendChat && chatInput) {
+                sendChat.addEventListener('click', sendChatMessage);
+                chatInput.addEventListener('keypress', function(e) {
+                    if (e.key === 'Enter') {
+                        sendChatMessage();
+                    }
+                });
+            }
+
+            // Virtual tour and video modal
+            const virtualTourBtn = document.getElementById('virtualTourBtn');
+            const videoModal = document.getElementById('videoModal');
+            const closeVideo = document.getElementById('closeVideo');
+
+            if (virtualTourBtn && videoModal) {
+                virtualTourBtn.addEventListener('click', () => {
+                    videoModal.classList.remove('hidden');
+                });
+            }
+
+            if (closeVideo && videoModal) {
+                closeVideo.addEventListener('click', () => {
+                    videoModal.classList.add('hidden');
+                });
+            }
+
+            // Social share buttons
+            document.querySelectorAll('.social-share').forEach(btn => {
+                btn.addEventListener('click', function() {
+                    const url = window.location.href;
+                    const text = "Check out this amazing Bandung tourism website!";
+                    
+                    if (this.querySelector('.fa-whatsapp')) {
+                        window.open(`https://wa.me/?text=${encodeURIComponent(text + ' ' + url)}`, '_blank', 'noopener,noreferrer');
+                    } else if (this.querySelector('.fa-facebook-f')) {
+                        window.open(`https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(url)}`, '_blank', 'noopener,noreferrer');
+                    } else if (this.querySelector('.fa-twitter')) {
+                        window.open(`https://twitter.com/intent/tweet?text=${encodeURIComponent(text)}&url=${encodeURIComponent(url)}`, '_blank', 'noopener,noreferrer');
+                    }
+                });
+            });
+        }
+
+        function toggleDarkMode() {
+            isDarkMode = !isDarkMode;
+            document.documentElement.classList.toggle('dark', isDarkMode);
+            
+            // Update nav links color
+            document.querySelectorAll('.nav-link').forEach(link => {
+                if (isDarkMode) {
+                    link.classList.add('text-white');
+                    link.classList.remove('text-gray-800');
+                } else {
+                    link.classList.add('text-gray-800');
+                    link.classList.remove('text-white');
+                }
+            });
+        }
+
+        function toggleLanguage() {
+            currentLanguage = currentLanguage === 'id' ? 'en' : 'id';
+            document.getElementById('currentLang').textContent = currentLanguage.toUpperCase();
+            updateLanguage();
+        }
+
+        function updateLanguage() {
+            const t = translations[currentLanguage];
+            
+            // Update navigation
+            document.querySelectorAll('.nav-link').forEach((link, index) => {
+                const keys = ['home', 'destinations', 'gallery', 'events', 'blog', 'contact'];
+                if (keys[index]) {
+                    link.textContent = t[keys[index]];
+                }
+            });
+
+            // Update search placeholder
+            const searchInput = document.getElementById('searchInput');
+            if (searchInput) {
+                searchInput.placeholder = t.search_placeholder;
+            }
+
+            // Update filter buttons
+            document.querySelectorAll('.filter-btn').forEach((btn, index) => {
+                const keys = ['all', 'nature', 'culinary', 'culture', 'shopping'];
+                if (keys[index]) {
+                    btn.textContent = t[keys[index]];
+                }
+            });
+        }
+
+        function renderDestinations(filter = 'all') {
+            const grid = document.getElementById('destinationGrid');
+            if (!grid) return;
+
+            const filteredDestinations = filter === 'all' 
+                ? destinations 
+                : destinations.filter(dest => dest.category === filter);
+
+            grid.innerHTML = filteredDestinations.map(dest => `
+                <div class="destination-card bg-white dark:bg-gray-800 rounded-lg shadow-lg overflow-hidden">
+                    <div class="h-48 bg-gradient-to-br from-blue-400 to-purple-500 flex items-center justify-center">
+                        <i class="fas fa-mountain text-white text-4xl"></i>
+                    </div>
+                    <div class="p-6">
+                        <div class="flex items-center justify-between mb-2">
+                            <h4 class="text-xl font-bold">${dest.name}</h4>
+                            <div class="flex items-center space-x-1">
+                                <i class="fas fa-star text-yellow-400"></i>
+                                <span class="text-sm text-gray-600 dark:text-gray-300">${dest.rating}</span>
+                            </div>
+                        </div>
+                        <p class="text-gray-600 dark:text-gray-300 mb-4">${dest.description}</p>
+                        <div class="flex items-center justify-between">
+                            <span class="text-lg font-semibold text-blue-600">${dest.price}</span>
+                            <button class="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-lg transition-colors">
+                                Lihat Detail
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        function filterDestinations(category) {
+            renderDestinations(category);
+        }
+
+        function updateTestimonialCarousel(testimonialData) {
+            const slides = document.getElementById('testimonialSlides');
+            if (!slides) return;
+
+            slides.innerHTML = testimonialData.map(testimonial => `
+                <div class="testimonial-card w-full flex-shrink-0 bg-white dark:bg-gray-800 p-8 rounded-lg shadow-lg mx-4">
+                    <div class="flex items-center mb-4">
+                        <div class="w-12 h-12 bg-gradient-to-br from-blue-400 to-purple-500 rounded-full flex items-center justify-center text-white font-bold text-lg">
+                            ${testimonial.name.charAt(0)}
+                        </div>
+                        <div class="ml-4">
+                            <h5 class="font-semibold">${testimonial.name}</h5>
+                            <div class="flex items-center space-x-1">
+                                ${Array.from({length: 5}, (_, i) => `
+                                    <i class="fas fa-star ${i < testimonial.rating ? 'text-yellow-400' : 'text-gray-300'}"></i>
+                                `).join('')}
+                            </div>
+                        </div>
+                    </div>
+                    <p class="text-gray-600 dark:text-gray-300 italic">"${testimonial.message}"</p>
+                    <p class="text-sm text-gray-500 mt-4">- ${testimonial.location || 'Pengunjung'}</p>
+                </div>
+            `).join('');
+        }
+
+        function changeTestimonial(direction) {
+            const slides = document.getElementById('testimonialSlides');
+            if (!slides) return;
+
+            const totalSlides = slides.children.length;
+            currentTestimonialIndex += direction;
+
+            if (currentTestimonialIndex >= totalSlides) {
+                currentTestimonialIndex = 0;
+            } else if (currentTestimonialIndex < 0) {
+                currentTestimonialIndex = totalSlides - 1;
+            }
+
+            slides.style.transform = `translateX(-${currentTestimonialIndex * 100}%)`;
+        }
+
+        function updateStarRating(rating) {
+            document.querySelectorAll('#starRating i').forEach((star, index) => {
+                if (index < rating) {
+                    star.classList.remove('text-gray-300');
+                    star.classList.add('text-yellow-400');
+                } else {
+                    star.classList.remove('text-yellow-400');
+                    star.classList.add('text-gray-300');
+                }
+            });
+        }
+
+        async function handleContactSubmit(e) {
+            e.preventDefault();
+            
+            if (currentRecordCount >= 999) {
+                showToast("Maaf, batas maksimum 999 pesan telah tercapai. Silakan hubungi kami melalui telepon.", "error");
+                return;
+            }
+
+            const formData = {
+                id: Date.now().toString(),
+                name: document.getElementById('contactName').value,
+                email: document.getElementById('contactEmail').value,
+                destination: document.getElementById('contactDestination').value,
+                message: document.getElementById('contactMessage').value,
+                type: 'contact',
+                created_at: new Date().toISOString()
+            };
+
+            const submitBtn = e.target.querySelector('button[type="submit"]');
+            const originalText = submitBtn.textContent;
+            submitBtn.textContent = 'Mengirim...';
+            submitBtn.disabled = true;
+
+            try {
+                if (window.dataSdk) {
+                    const result = await window.dataSdk.create(formData);
+                    if (result.isOk) {
+                        showToast("Pesan berhasil dikirim! Terima kasih atas feedback Anda.", "success");
+                        e.target.reset();
+                    } else {
+                        showToast("Gagal mengirim pesan. Silakan coba lagi.", "error");
+                    }
+                } else {
+                    showToast("Pesan berhasil dikirim! Terima kasih atas feedback Anda.", "success");
+                    e.target.reset();
+                }
+            } catch (error) {
+                showToast("Terjadi kesalahan. Silakan coba lagi.", "error");
+            } finally {
+                submitBtn.textContent = originalText;
+                submitBtn.disabled = false;
+            }
+        }
+
+        async function handleRatingSubmit(e) {
+            e.preventDefault();
+            
+            if (selectedRating === 0) {
+                showToast("Silakan berikan rating terlebih dahulu.", "error");
+                return;
+            }
+
+            if (currentRecordCount >= 999) {
+                showToast("Maaf, batas maksimum 999 testimoni telah tercapai.", "error");
+                return;
+            }
+
+            const formData = {
+                id: Date.now().toString(),
+                name: document.getElementById('ratingName').value,
+                rating: selectedRating,
+                message: document.getElementById('ratingMessage').value,
+                type: 'testimonial',
+                created_at: new Date().toISOString()
+            };
+
+            const submitBtn = e.target.querySelector('button[type="submit"]');
+            const originalText = submitBtn.textContent;
+            submitBtn.textContent = 'Mengirim...';
+            submitBtn.disabled = true;
+
+            try {
+                if (window.dataSdk) {
+                    const result = await window.dataSdk.create(formData);
+                    if (result.isOk) {
+                        showToast("Testimoni berhasil dikirim! Terima kasih atas penilaian Anda.", "success");
+                        e.target.reset();
+                        selectedRating = 0;
+                        updateStarRating(0);
+                    } else {
+                        showToast("Gagal mengirim testimoni. Silakan coba lagi.", "error");
+                    }
+                } else {
+                    showToast("Testimoni berhasil dikirim! Terima kasih atas penilaian Anda.", "success");
+                    e.target.reset();
+                    selectedRating = 0;
+                    updateStarRating(0);
+                }
+            } catch (error) {
+                showToast("Terjadi kesalahan. Silakan coba lagi.", "error");
+            } finally {
+                submitBtn.textContent = originalText;
+                submitBtn.disabled = false;
+            }
+        }
+
+        function sendChatMessage() {
+            const chatInput = document.getElementById('chatInput');
+            const chatMessages = document.getElementById('chatMessages');
+            
+            if (!chatInput || !chatMessages || !chatInput.value.trim()) return;
+
+            const userMessage = chatInput.value.trim();
+            
+            // Add user message
+            const userDiv = document.createElement('div');
+            userDiv.className = 'text-right mb-3';
+            userDiv.innerHTML = `
+                <div class="bg-blue-600 text-white p-3 rounded-lg inline-block max-w-xs">
+                    <p class="text-sm">${userMessage}</p>
+                </div>
+            `;
+            chatMessages.appendChild(userDiv);
+
+            // Clear input
+            chatInput.value = '';
+
+            // Simulate bot response
+            setTimeout(() => {
+                const botDiv = document.createElement('div');
+                botDiv.className = 'mb-3';
+                
+                let botResponse = "Terima kasih atas pertanyaan Anda! ";
+                
+                if (userMessage.toLowerCase().includes('tangkuban')) {
+                    botResponse += "Tangkuban Perahu adalah gunung berapi yang sangat populer di Bandung. Tiket masuk Rp 30.000 dan buka setiap hari dari jam 08:00-17:00.";
+                } else if (userMessage.toLowerCase().includes('kawah putih')) {
+                    botResponse += "Kawah Putih terletak di Ciwidey dengan tiket masuk Rp 25.000. Jangan lupa bawa jaket karena cuacanya dingin!";
+                } else if (userMessage.toLowerCase().includes('kuliner') || userMessage.toLowerCase().includes('makanan')) {
+                    botResponse += "Bandung terkenal dengan kuliner seperti batagor, siomay, dan gudeg. Coba kunjungi Jalan Braga untuk pengalaman kuliner yang lengkap.";
+                } else {
+                    botResponse += "Saya siap membantu Anda dengan informasi tentang destinasi wisata, kuliner, dan tips perjalanan di Bandung. Ada yang spesifik ingin Anda tanyakan?";
+                }
+                
+                botDiv.innerHTML = `
+                    <div class="bg-gray-100 dark:bg-gray-700 p-3 rounded-lg max-w-xs">
+                        <p class="text-sm">${botResponse}</p>
+                    </div>
+                `;
+                chatMessages.appendChild(botDiv);
+                chatMessages.scrollTop = chatMessages.scrollHeight;
+            }, 1000);
+
+            chatMessages.scrollTop = chatMessages.scrollHeight;
+        }
+
+        function showToast(message, type = 'info') {
+            const toast = document.createElement('div');
+            toast.className = `fixed top-20 right-6 z-50 p-4 rounded-lg shadow-lg text-white max-w-sm transform transition-all duration-300 translate-x-full ${
+                type === 'success' ? 'bg-green-600' : 
+                type === 'error' ? 'bg-red-600' : 'bg-blue-600'
+            }`;
+            toast.innerHTML = `
+                <div class="flex items-center space-x-2">
+                    <i class="fas ${type === 'success' ? 'fa-check-circle' : type === 'error' ? 'fa-exclamation-circle' : 'fa-info-circle'}"></i>
+                    <span class="text-sm">${message}</span>
+                </div>
+            `;
+            
+            document.body.appendChild(toast);
+            
+            setTimeout(() => {
+                toast.classList.remove('translate-x-full');
+            }, 100);
+            
+            setTimeout(() => {
+                toast.classList.add('translate-x-full');
+                setTimeout(() => {
+                    document.body.removeChild(toast);
+                }, 300);
+            }, 4000);
+        }
+
+        function animateCounters() {
+            const counters = document.querySelectorAll('[data-count]');
+            
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        const counter = entry.target;
+                        const target = parseFloat(counter.getAttribute('data-count'));
+                        const increment = target / 100;
+                        let current = 0;
+                        
+                        const updateCounter = () => {
+                            if (current < target) {
+                                current += increment;
+                                if (target % 1 === 0) {
+                                    counter.textContent = Math.floor(current);
+                                } else {
+                                    counter.textContent = current.toFixed(1);
+                                }
+                                requestAnimationFrame(updateCounter);
+                            } else {
+                                counter.textContent = target % 1 === 0 ? target : target.toFixed(1);
+                            }
+                        };
+                        
+                        updateCounter();
+                        observer.unobserve(counter);
+                    }
+                });
+            });
+            
+            counters.forEach(counter => observer.observe(counter));
+        }
+
+        function setupScrollProgress() {
+            const progressBar = document.getElementById('scrollProgress');
+            if (!progressBar) return;
+
+            window.addEventListener('scroll', () => {
+                const scrollTop = window.pageYOffset;
+                const docHeight = document.body.scrollHeight - window.innerHeight;
+                const scrollPercent = scrollTop / docHeight;
+                
+                progressBar.style.transform = `scaleX(${scrollPercent})`;
+            });
+        }
+
+        function setupParallaxEffect() {
+            window.addEventListener('scroll', () => {
+                const scrolled = window.pageYOffset;
+                const parallaxElements = document.querySelectorAll('.parallax-bg');
+                
+                parallaxElements.forEach(element => {
+                    const speed = 0.5;
+                    element.style.transform = `translateY(${scrolled * speed}px)`;
+                });
+            });
+        }
+
+        // Auto-rotate testimonials
+        setInterval(() => {
+            changeTestimonial(1);
+        }, 5000);
+    </script>
+ <script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'99e2fdf67607b907',t:'MTc2MzA4NjQzMi4wMDAwMDA='};var a=document.createElement('script');a.nonce='';a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body>
+</html>
